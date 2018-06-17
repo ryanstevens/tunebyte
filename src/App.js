@@ -79,6 +79,7 @@ class App extends Component {
       shares: [],
       names: [],
       roles: [],
+      keys: [],
       songCode: 0,
       songTitle: ""
     };
@@ -97,12 +98,17 @@ class App extends Component {
       payload.roles.push(node.value);
     }
 
+    let keys = document.getElementsByClassName("key");
+    for (let node of keys) {
+      payload.keys.push(node.value);
+    }
+
     payload.songCode = parseInt(
       document.getElementsByClassName("songCode")[0].value
     );
 
     payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
-    debugger;
+ //   debugger;
     this.setState({ payload: payload, hidden: true });
 
 
@@ -125,11 +131,11 @@ class App extends Component {
         .then(instance => {
           tuneByteInstance = instance;
 
-          tuneByteInstance.addPayee('0xA98199042eb8464d4859d108fA2B0e5a4A181b3c', 23, {from: accounts[0]})
+          tuneByteInstance.addPayee(payload.keys[0], payload.shares[0], {from: accounts[0]})
             .then((result) => {
               console.log("DONE", arguments);
+              tuneByteInstance.getPayees.call().then((payees) => console.log('Payees', payees));
             })
-          
           
         })
     });

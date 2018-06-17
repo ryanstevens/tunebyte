@@ -18,7 +18,11 @@ pragma solidity ^0.4.18;
 contract TuneByte {
 
     mapping(address => uint256) public shares;
-    address[] public payers;
+    address[] public payees;
+    
+  uint256 public totalShares = 0;
+  uint256 public totalReleased = 0;
+
     
       function addPayee(address _payee, uint256 _shares) public {
     
@@ -27,19 +31,23 @@ contract TuneByte {
         
       }
 
-      function pay(amount) public payable {
+      function pay(uint amount) public payable {
       
         address payer = msg.sender;
 
         require(shares[payer] > 0);
 
-        uint256 totalReceived = address(this).balance.add(totalReleased);
-        uint256 payment = totalReceived.mul(
-          shares[payer]).div(totalShares);
+        // uint256 totalReceived = address(this).balance.add(totalReleased);
+        // uint256 payment = totalReceived.mul(
+        //   shares[payer]).div(totalShares);
 
-        totalReleased = totalReleased.add(payment);
+        // totalReleased = totalReleased.add(payment);
 
-        payer.transfer(payment);
+       // payer.transfer(payment);
+      }
+
+      function getPayees() view public returns (address[]) {
+        return payees;
       }
 
 
