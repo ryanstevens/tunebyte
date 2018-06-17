@@ -56,6 +56,7 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "nuke-and-pave": "NODE_ENV=development rm -rf build/ && truffle compile && truffle migrate && npm run build && npm start",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
