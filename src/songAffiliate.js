@@ -52,6 +52,17 @@ class SongAffiliate extends Component {
             onChange={this.handleChange}
           />
         </div>
+        <div data-aos="zoom-in-right" data-aos-delay="800">
+          <label for="shares">Public Key:</label>
+          <input
+            type="text"
+            name="key"
+            required
+            placeholder="Key"
+            className="key"
+            onChange={this.handleChange}
+          />
+        </div>        
       </Container>
     );
   }
