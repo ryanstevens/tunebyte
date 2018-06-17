@@ -51,7 +51,10 @@
   "dependencies": {
     "dotenv": "^2.0.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-d3-basic": "^1.6.11",
+    "react-dom": "^15.4.2",
+    "react-simple-pie-chart": "^0.5.0",
+    "styled-components": "^3.3.2"
   },
   "scripts": {
     "start": "node scripts/start.js",
