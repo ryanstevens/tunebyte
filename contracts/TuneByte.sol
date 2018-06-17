@@ -17,41 +17,16 @@ pragma solidity ^0.4.18;
 
 contract TuneByte {
 
-    mapping(uint => Song) payment_template;
-    uint thing;
-
-    struct Song{
-      uint[] public_key;
-      uint[] percents;
-    }
+    mapping(address => uint256) public shares;
+    address[] public payees;
     
-    function tunebyte(uint _songId, uint[] _publicKeys, uint[] _percents) public {
-        payment_template[_songId] = Song(_publicKeys, _percents);
-    }
-
-    function inc() {
-      thing = thing+1;
-    }
-
-    function getInc() public view returns (uint) {
-      return thing;
-    }
-
+      function addPayee(address _payee, uint256 _shares) public {
     
-    function pay(uint _songId, uint _amount) payable public returns (uint[]) {
-        Song temp = payment_template[_songId];
-        uint[] myArray;
-        uint total = 0;
-
-        for(uint i=0; i < temp.percents.length; i++){
-            total = total + temp.percents[i];
-        }
-
-        for(uint j=0; i < temp.percents.length; i++){
-            myArray.push((temp.percents[i]/total) * _amount); 
-        }
+        payees.push(_payee);
+        shares[_payee] = _shares;
         
-        return myArray;
-    }
+      }
+
+
 }
 

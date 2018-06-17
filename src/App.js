@@ -74,7 +74,7 @@ class App extends Component {
 
           (function go() {
             
-            tuneByteInstance.inc().then(() => {
+            tuneByteInstance.inc.call().then(() => {
               
               tuneByteInstance.getInc().then((result) => {
 
