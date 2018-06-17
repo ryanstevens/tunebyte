@@ -3,7 +3,9 @@ import TuneByteContract from "../build/contracts/TuneByte.json";
 import getWeb3 from "./utils/getWeb3";
 import Styled from "styled-components";
 import PieChart from "react-simple-pie-chart";
+import AOS from "aos";
 
+import "aos/dist/aos.css";
 import "./css/oswald.css";
 import "./css/open-sans.css";
 import "./css/pure-min.css";
@@ -113,6 +115,14 @@ class App extends Component {
 
   componentDidMount() {
     this.updateSlices();
+    this.aos = AOS;
+    this.aos.init();
+    this.aos.refresh();
+  }
+
+  componentDidUpdate() {
+    this.aos = AOS;
+    this.aos.refresh();
   }
 
   updateSlices = () => {
@@ -141,29 +151,45 @@ class App extends Component {
     affiliates.fill(<SongAffiliate update={this.updateSlices} />);
     return (
       <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
+        <nav
+          className="navbar pure-menu pure-menu-horizontal"
+          data-aos="fade"
+          data-aos-delay="600"
+        >
           <a href="#" className="pure-menu-heading pure-menu-link">
-            TuneByte - A musical Journey
+            TuneByte - Musical Revenue Sharing Made Simple
           </a>
         </nav>
 
-        <main className="container">
+        <main
+          className="container"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <div>
-            <div className="pure-u-1-1">
+            <div className="pure-u-1-1" data-aos="fade-right">
               <h1>Define Your Terms!</h1>
               <h3>The Split</h3>
             </div>
-            <div style={{ height: "10rem", width: "10rem" }}>
+            <div style={{ height: "10rem", width: "10rem" }} data-aos="fade-up">
               <PieChart slices={this.state.slices} />
             </div>
 
             <form onSubmit={this.submitContract}>
-              <h2>Song Affiliates</h2>
+              <h2 data-aos="zoom-in-up" data-aos-delay="200">
+                Song Affiliates
+              </h2>
               <div className="songAffiliates">{affiliates}</div>
-              <button onClick={this.addMember}>Add Member</button>
+              <br />
+              <button
+                onClick={this.addMember}
+                data-aos="zoom-in-up"
+                data-aos-delay="200"
+              >
+                Add Member
+              </button>
 
-              <h2>Song Info</h2>
-              <Container className="songInfo">
+              <h2 data-aos="fade-up">Song Info</h2>
+              <Container className="songInfo" data-aos="fade-up">
                 <div>
                   <label for="song">Song Title:</label>
                   <input
@@ -186,7 +212,8 @@ class App extends Component {
                   />
                 </div>
               </Container>
-              <button>Create Contract</button>
+              <br />
+              <button data-aos="fade-up">Create Contract</button>
             </form>
           </div>
         </main>

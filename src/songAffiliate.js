@@ -19,8 +19,8 @@ class SongAffiliate extends Component {
 
   render() {
     return (
-      <Container>
-        <div>
+      <Container data-aos="zoom-in-up" data-aos-delay="200">
+        <div data-aos="zoom-in-right">
           <label for="name">Name:</label>
           <input
             type="text"
@@ -30,7 +30,7 @@ class SongAffiliate extends Component {
             className="name"
           />
         </div>
-        <div>
+        <div data-aos="zoom-in-right" data-aos-delay="400">
           <label for="role">Role:</label>
           <input
             type="text"
@@ -40,7 +40,7 @@ class SongAffiliate extends Component {
             className="role"
           />
         </div>
-        <div>
+        <div data-aos="zoom-in-right" data-aos-delay="600">
           <label for="shares">Shares:</label>
           <input
             type="number"
