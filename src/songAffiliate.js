@@ -22,11 +22,23 @@ class SongAffiliate extends Component {
       <Container>
         <div>
           <label for="name">Name:</label>
-          <input type="text" name="name" placeholder="Name" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            required
+            className="name"
+          />
         </div>
         <div>
           <label for="role">Role:</label>
-          <input type="text" name="role" placeholder="Role" required />
+          <input
+            type="text"
+            name="role"
+            placeholder="Role"
+            required
+            className="role"
+          />
         </div>
         <div>
           <label for="shares">Shares:</label>

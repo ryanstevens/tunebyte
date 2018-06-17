@@ -39,7 +39,7 @@ class App extends Component {
         });
 
         // Instantiate contract once web3 provided.
-        this.instantiateContract();
+        // this.instantiateContract();
       })
       .catch(() => {
         console.log("Error finding web3.");
@@ -78,8 +78,37 @@ class App extends Component {
     });
   }
 
-  submitContract = () => {
-    console.log("");
+  submitContract = e => {
+    e.preventDefault();
+    let payload = {
+      shares: [],
+      names: [],
+      roles: [],
+      songCode: 0,
+      songTitle: ""
+    };
+    let htmlShares = document.getElementsByClassName("shares");
+    for (let node of htmlShares) {
+      payload.shares.push(parseInt(node.value));
+    }
+
+    let htmlNames = document.getElementsByClassName("name");
+    for (let node of htmlNames) {
+      payload.names.push(node.value);
+    }
+
+    let htmlRoles = document.getElementsByClassName("role");
+    for (let node of htmlRoles) {
+      payload.roles.push(node.value);
+    }
+
+    payload.songCode = parseInt(
+      document.getElementsByClassName("songCode")[0].value
+    );
+
+    payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
+    debugger;
+    this.setState({ payload: payload });
   };
 
   componentDidMount() {
@@ -99,6 +128,7 @@ class App extends Component {
     }
     this.setState({ slices: sliceState });
   };
+
   addMember = e => {
     e.preventDefault();
     let prev = this.state.affiliates;
@@ -127,7 +157,7 @@ class App extends Component {
               <PieChart slices={this.state.slices} />
             </div>
 
-            <form>
+            <form onSubmit={this.submitContract}>
               <h2>Song Affiliates</h2>
               <div className="songAffiliates">{affiliates}</div>
               <button onClick={this.addMember}>Add Member</button>
@@ -136,7 +166,13 @@ class App extends Component {
               <Container className="songInfo">
                 <div>
                   <label for="song">Song Title:</label>
-                  <input type="text" name="song" placeholder="Role" required />
+                  <input
+                    type="text"
+                    name="song"
+                    placeholder="Role"
+                    required
+                    className="songTitle"
+                  />
                 </div>
 
                 <div>
@@ -146,10 +182,11 @@ class App extends Component {
                     name="songcode"
                     placeholder="Role"
                     required
+                    className="songCode"
                   />
                 </div>
               </Container>
-              <button onSubmit={this.submitContract}>Create Contract</button>
+              <button>Create Contract</button>
             </form>
           </div>
         </main>
