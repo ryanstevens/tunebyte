@@ -43,7 +43,7 @@ class App extends Component {
         });
 
         // Instantiate contract once web3 provided.
-        // this.instantiateContract();
+         this.instantiateContract();
       })
       .catch(() => {
         console.log("Error finding web3.");
@@ -58,46 +58,7 @@ class App extends Component {
      * state management library, but for convenience I've placed them here.
      */
 
-    const contract = require("truffle-contract");
-    const tuneByte = contract(TuneByteContract);
-    tuneByte.setProvider(this.state.web3.currentProvider);
-
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var tuneByteInstance;
-
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      tuneByte
-        .deployed()
-        .then(instance => {
-          tuneByteInstance = instance;
-
-          (function go() {
-            
-            tuneByteInstance.inc.call().then(() => {
-              
-              tuneByteInstance.getInc().then((result) => {
-
-                console.log( result);
-                setTimeout(go, 1000);
-
-              });
-            });
-          })();
-          
-        })
-    });
-    
-    // try {
-    //   var Client = this.state.web3.eth.contract(TuneByteContract)
-    //   var client = Client.at('0xA98199042eb8464d4859d108fA2B0e5a4A181b3c', function() {
-
-    //     console.log(arguments);
-    //   })
-    // }catch(e) {
-    //   console.log(e);
-    // }
-    // console.log(client);
+   
   }
 
   componentDidMount() {
@@ -143,6 +104,36 @@ class App extends Component {
     payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
     debugger;
     this.setState({ payload: payload, hidden: true });
+
+
+
+
+
+    const contract = require("truffle-contract");
+    const tuneByte = contract(TuneByteContract);
+    tuneByte.setProvider(this.state.web3.currentProvider);
+
+    // Declaring this for later so we can chain functions on SimpleStorage.
+    var tuneByteInstance;
+    window.tune = tuneByteInstance;
+
+    // Get accounts.
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      console.log("ACOUNTS", accounts);
+      tuneByte
+        .deployed()
+        .then(instance => {
+          tuneByteInstance = instance;
+
+          tuneByteInstance.addPayee('0xA98199042eb8464d4859d108fA2B0e5a4A181b3c', 23, {from: accounts[0]})
+            .then((result) => {
+              console.log("DONE", arguments);
+            })
+          
+          
+        })
+    });
+    
   };
 
   updateSlices = () => {
