@@ -3,6 +3,7 @@ import TuneByteContract from "../build/contracts/TuneByte.json";
 import getWeb3 from "./utils/getWeb3";
 import Styled from "styled-components";
 import PieChart from "react-simple-pie-chart";
+import ParticleEffectButton from "react-particle-effect-button";
 import AOS from "aos";
 
 import "aos/dist/aos.css";
@@ -26,7 +27,8 @@ class App extends Component {
       storageValue: 0,
       affiliates: 1,
       web3: null,
-      slices: []
+      slices: [],
+      hidden: false
     };
   }
 
@@ -80,6 +82,18 @@ class App extends Component {
     });
   }
 
+  componentDidMount() {
+    this.updateSlices();
+    this.aos = AOS;
+    this.aos.init();
+    this.aos.refresh();
+  }
+
+  componentDidUpdate() {
+    this.aos = AOS;
+    this.aos.refresh();
+  }
+
   submitContract = e => {
     e.preventDefault();
     let payload = {
@@ -110,20 +124,8 @@ class App extends Component {
 
     payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
     debugger;
-    this.setState({ payload: payload });
+    this.setState({ payload: payload, hidden: true });
   };
-
-  componentDidMount() {
-    this.updateSlices();
-    this.aos = AOS;
-    this.aos.init();
-    this.aos.refresh();
-  }
-
-  componentDidUpdate() {
-    this.aos = AOS;
-    this.aos.refresh();
-  }
 
   updateSlices = () => {
     let sliceState = [];
@@ -213,7 +215,13 @@ class App extends Component {
                 </div>
               </Container>
               <br />
-              <button data-aos="fade-up">Create Contract</button>
+              <ParticleEffectButton
+                color="#121019"
+                hidden={this.state.hidden}
+                data-aos="fade-up"
+              >
+                <button>Create Contract</button>
+              </ParticleEffectButton>
             </form>
           </div>
         </main>
