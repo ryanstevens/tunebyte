@@ -71,15 +71,33 @@ class App extends Component {
         .deployed()
         .then(instance => {
           tuneByteInstance = instance;
-          debugger;
-          return 1;
-          // return tuneByteInstance.get.call(accounts[0]);
+
+          (function go() {
+            
+            tuneByteInstance.inc().then(() => {
+              
+              tuneByteInstance.getInc().then((result) => {
+
+                console.log( result);
+                setTimeout(go, 1000);
+
+              });
+            });
+          })();
+          
         })
-        .then(result => {
-          // Update state with the result.
-          return this.setState({ storageValue: result.c[0] });
-        });
     });
+    
+    // try {
+    //   var Client = this.state.web3.eth.contract(TuneByteContract)
+    //   var client = Client.at('0xA98199042eb8464d4859d108fA2B0e5a4A181b3c', function() {
+
+    //     console.log(arguments);
+    //   })
+    // }catch(e) {
+    //   console.log(e);
+    // }
+    // console.log(client);
   }
 
   componentDidMount() {

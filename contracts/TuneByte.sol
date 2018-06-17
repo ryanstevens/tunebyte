@@ -18,6 +18,7 @@ pragma solidity ^0.4.18;
 contract TuneByte {
 
     mapping(uint => Song) payment_template;
+    uint thing;
 
     struct Song{
       uint[] public_key;
@@ -26,6 +27,14 @@ contract TuneByte {
     
     function tunebyte(uint _songId, uint[] _publicKeys, uint[] _percents) public {
         payment_template[_songId] = Song(_publicKeys, _percents);
+    }
+
+    function inc() {
+      thing = thing+1;
+    }
+
+    function getInc() public view returns (uint) {
+      return thing;
     }
 
     
