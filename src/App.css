@@ -55,6 +55,15 @@ label {
 }
 /* NAVBAR */
 
+.resultsContainer {
+  padding-left:30px;
+}
+
+.block {
+  font-weight: bold;
+  font-size:1.2em;
+}
+
 .navbar {
   font-size:1.2em;
   position: fixed;

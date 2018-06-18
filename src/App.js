@@ -92,7 +92,7 @@ class App extends Component {
 
     payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
  //   debugger;
-    this.setState({ payload: payload, hidden: false });
+    this.setState({ payload: payload, hidden: true });
 
     getTuneInstance(function(err, tuneByteInstance, accounts) {
       let keys = payload.keys
@@ -100,9 +100,11 @@ class App extends Component {
       tuneByteInstance.addPayee(keys, shares, {from: accounts[0]})
         .then((result) => {
           console.log("DONE", arguments);
+          
+          this.setState({ payload: payload, hidden: true, showFinal: true, block: arguments[2][0] });
         //  logTuneInstance();
         })
-    });
+    }.bind(this));
 
   };
 
@@ -152,11 +154,11 @@ class App extends Component {
               <h1>Define Your Terms!</h1>
               <h3>The Split</h3>
             </div>
-            <div style={{ height: "10rem", width: "10rem" }} data-aos="fade-up">
+            <div style={{ height: "10rem", width: "40rem" }} data-aos="fade-up">
               <PieChart slices={this.state.slices} />
             </div>
 
-            <form onSubmit={this.submitContract}>
+            <form onSubmit={this.submitContract} style={{display : this.state.showFinal ? 'none' : 'block'}}>
               <h2 data-aos="zoom-in-up" data-aos-delay="200">
                 Song Affiliates
               </h2>
@@ -203,6 +205,12 @@ class App extends Component {
                 <button>Create Contract</button>
               </ParticleEffectButton>
             </form>
+
+            <div className="resultsContainer" style={{position: 'fixed', display : this.state.showFinal ? 'block' : 'none'}}>
+                <div>
+                  Recorded equity allocation to block <div className="block"> {this.state.block} </div>
+                </div>
+            </div>
           </div>
         </main>
       </div>
