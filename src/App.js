@@ -31,7 +31,7 @@ class App extends Component {
       hidden: false
     };
 
-    logTuneInstance();
+  //  logTuneInstance();
 
 
   }
@@ -99,7 +99,7 @@ class App extends Component {
       tuneByteInstance.addPayee(keys, shares, {from: accounts[0]})
         .then((result) => {
           console.log("DONE", arguments);
-          logTuneInstance();
+        //  logTuneInstance();
         })
     });
 
@@ -242,7 +242,7 @@ function getTuneInstance(cb) {
 
 function logTuneInstance() {
   getTuneInstance(function(err, tuneByteInstance, accounts) {
-      tuneByteInstance.getPayees.call().then((payees) => {
+      tuneByteInstance.getPayees().then((payees) => {
         console.log("PAYEES", payees);
         payees.forEach((payee) => {
           tuneByteInstance.getShares.call(payee).then((share) => console.log("share for "+payee, share.c[0]));
@@ -250,6 +250,7 @@ function logTuneInstance() {
       });
   });
 }
+window.logTuneInstance = logTuneInstance;
 
 export default App;
 

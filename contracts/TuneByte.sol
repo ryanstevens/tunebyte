@@ -25,8 +25,8 @@ contract TuneByte {
     
     function addPayee(address[] _payees, uint256[] _shares) public {
       
-        payees = _payees;
         for (uint i=0; i<_payees.length; i++) {
+          payees.push(_payees[i]);
           shares[_payees[i]] = _shares[i];
         }
     }
