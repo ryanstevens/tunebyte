@@ -20,22 +20,20 @@ contract TuneByte {
     mapping(address => uint256) public shares;
     address[] public payees;
     
-  uint256 public totalShares = 0;
-  uint256 public totalReleased = 0;
-
+    uint256 public totalShares = 0;
+    uint256 public totalReleased = 0;
     
-      function addPayee(address _payee, uint256 _shares) public {
-    
-        payees.push(_payee);
-        shares[_payee] = _shares;
-        
-      }
-
-      function pay(uint amount) public payable {
+    function addPayee(address[] _payees, uint256[] _shares) public {
       
-        address payer = msg.sender;
+        payees = _payees;
+        for (uint i=0; i<_payees.length; i++) {
+          shares[_payees[i]] = _shares[i];
+        }
+    }
 
-        require(shares[payer] > 0);
+    function pay(uint amount) public payable {
+    
+        address payer = msg.sender;
 
         // uint256 totalReceived = address(this).balance.add(totalReleased);
         // uint256 payment = totalReceived.mul(
@@ -43,12 +41,17 @@ contract TuneByte {
 
         // totalReleased = totalReleased.add(payment);
 
-       // payer.transfer(payment);
-      }
+        // payer.transfer(payment);
+    }
 
-      function getPayees() view public returns (address[]) {
+    function getPayees() view public returns (address[]) {
         return payees;
-      }
+    }
+
+
+    function getShares(address payee) view public returns (uint256) {
+        return shares[payee];
+    }
 
 
 }

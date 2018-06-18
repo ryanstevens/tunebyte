@@ -36,30 +36,8 @@ class App extends Component {
     // Get network provider and web3 instance.
     // See utils/getWeb3 for more info.
 
-    getWeb3
-      .then(results => {
-        this.setState({
-          web3: results.web3
-        });
-
-        // Instantiate contract once web3 provided.
-         this.instantiateContract();
-      })
-      .catch(() => {
-        console.log("Error finding web3.");
-      });
   }
 
-  instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
-   
-  }
 
   componentDidMount() {
     this.updateSlices();
@@ -85,7 +63,7 @@ class App extends Component {
     };
     let htmlShares = document.getElementsByClassName("shares");
     for (let node of htmlShares) {
-      payload.shares.push(parseInt(node.value));
+      payload.shares.push(parseInt(node.value, 10));
     }
 
     let htmlNames = document.getElementsByClassName("name");
@@ -104,43 +82,25 @@ class App extends Component {
     }
 
     payload.songCode = parseInt(
-      document.getElementsByClassName("songCode")[0].value
+      document.getElementsByClassName("songCode")[0].value, 10
     );
 
     payload.songTitle = document.getElementsByClassName("songTitle")[0].value;
  //   debugger;
-    this.setState({ payload: payload, hidden: true });
+    this.setState({ payload: payload, hidden: false });
 
-
-
-
-
-    const contract = require("truffle-contract");
-    const tuneByte = contract(TuneByteContract);
-    tuneByte.setProvider(this.state.web3.currentProvider);
-
-    // Declaring this for later so we can chain functions on SimpleStorage.
-    var tuneByteInstance;
-    window.tune = tuneByteInstance;
-
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      console.log("ACOUNTS", accounts);
-      tuneByte
-        .deployed()
-        .then(instance => {
-          tuneByteInstance = instance;
-
-          tuneByteInstance.addPayee(payload.keys[0], payload.shares[0], {from: accounts[0]})
-            .then((result) => {
-              console.log("DONE", arguments);
-              tuneByteInstance.getPayees.call().then((payees) => console.log('Payees', payees));
-            })
-          
+    getTuneInstance(function(err, tuneByteInstance, accounts) {
+      let keys = payload.keys
+      let shares = payload.shares
+      tuneByteInstance.addPayee(keys, shares, {from: accounts[0]})
+        .then((result) => {
+          console.log("DONE", arguments);
+          tuneByteInstance.getPayees.call().then((payees) => alert(JSON.stringify(payees)));
         })
     });
-    
+
   };
+
 
   updateSlices = () => {
     let sliceState = [];
@@ -149,7 +109,7 @@ class App extends Component {
     for (let node of slices) {
       sliceState.push({
         color: this.props.colors[counter],
-        value: parseInt(node.value)
+        value: parseInt(node.value, 10)
       });
       counter++;
     }
@@ -243,6 +203,37 @@ class App extends Component {
       </div>
     );
   }
+}
+
+// Declaring this for later so we can chain functions on SimpleStorage.
+let tuneByteInstance = null;
+let accounts=null;
+function getTuneInstance(cb) {
+  if (tuneByteInstance) {
+    return cb(null, tuneByteInstance, accounts);
+  }
+
+  const contract = require("truffle-contract");
+  const tuneByte = contract(TuneByteContract);
+
+  getWeb3
+    .then(results => {
+      const web3 = results.web3;
+      tuneByte.setProvider(web3.currentProvider);
+
+      web3.eth.getAccounts((error, _accounts) => {
+        accounts = _accounts;
+        console.log("ACOUNTS", accounts);
+        tuneByte
+          .deployed()
+          .then(instance => {
+            tuneByteInstance = instance;
+            cb(null, tuneByteInstance, accounts);
+          })
+      });
+
+    });
+      
 }
 
 export default App;
