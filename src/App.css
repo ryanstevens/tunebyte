@@ -9,6 +9,32 @@ h1, h2, h3 {
   font-family: 'Oswald', 'Arial Narrow', sans-serif;
 }
 
+.split {
+  padding-left:270px;
+}
+.splash { 
+  position:absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* Optional - just for DIV)*/
+    border: solid 1px #000000;
+    background-color:#000;
+    background-image: url('splash.PNG');
+    
+    background-position: center;
+    background-size: 1200px ;
+
+}
+
+.owner {
+  position:absolute;
+  left: 700px;
+  top: 600px;
+
+}
+
 code {
   display: block;
   margin: 20px 0 15px 0;
@@ -56,7 +82,9 @@ label {
 /* NAVBAR */
 
 .resultsContainer {
-  padding-left:30px;
+  padding-left:90px;
+  padding-top:70px;
+  text-align:center
 }
 
 .block {

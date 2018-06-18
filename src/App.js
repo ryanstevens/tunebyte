@@ -29,7 +29,8 @@ class App extends Component {
       web3: null,
       slices: [],
       hidden: false,
-      containerStyle: 'flex'
+      containerStyle: 'flex',
+      showSplash: true
     };
 
   //  logTuneInstance();
@@ -130,11 +131,22 @@ class App extends Component {
     this.updateSlices();
   };
 
+  owner = e => {
+    
+    this.setState({ showSplash: false });
+  }
+
   render() {
     const affiliates = new Array(this.state.affiliates);
     affiliates.fill(<SongAffiliate update={this.updateSlices} />);
-    return (
-      <div className="App">
+    
+    return (<div>
+      <div className="splash" style={{display: this.state.showSplash ? 'block' : 'none'}}>
+         <button className="owner" onClick={this.owner} >
+            Claim Song
+         </button>
+      </div>
+      <div className="App" style={{display: this.state.showSplash ? 'none' : 'block'}}>
         <nav
           className="navbar pure-menu pure-menu-horizontal"
           data-aos="fade"
@@ -152,7 +164,7 @@ class App extends Component {
           <div className="form-container">
             <div className="pure-u-1-1" data-aos="fade-right">
               <h1>Define Your Terms!</h1>
-              <h3>The Split</h3>
+              <h3 className="split">The Split</h3>
             </div>
             <div style={{ height: "10rem", width: "40rem" }} data-aos="fade-up">
               <PieChart slices={this.state.slices} />
@@ -208,12 +220,12 @@ class App extends Component {
 
             <div className="resultsContainer" style={{position: 'fixed', display : this.state.showFinal ? 'block' : 'none'}}>
                 <div>
-                  Recorded equity allocation to block <div className="block"> {this.state.block} </div>
+                  Successfully recorded allocation in block <div className="block"> {this.state.block} </div>
                 </div>
             </div>
           </div>
         </main>
-      </div>
+      </div></div>
     );
   }
 }
