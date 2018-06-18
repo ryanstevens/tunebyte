@@ -16,6 +16,11 @@ code {
   background: #eee;
 }
 
+label {
+  margin-right:7px;
+  margin-left: 5px;
+}
+
 .container {
   box-sizing: border-box;
   width: 100%;
@@ -34,9 +39,24 @@ code {
   border-color: #0c1a2b;
 }
 
+.form-container {
+  width: 1030px;
+}
+
+.shares {
+  width:60px;
+}
+.key {
+  width:316px;
+}
+
+.songInfo {
+  justify-content : left !important;
+}
 /* NAVBAR */
 
 .navbar {
+  font-size:1.2em;
   position: fixed;
   padding: 5px;
   background: #0c1a2b;

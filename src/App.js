@@ -28,7 +28,8 @@ class App extends Component {
       affiliates: 1,
       web3: null,
       slices: [],
-      hidden: false
+      hidden: false,
+      containerStyle: 'flex'
     };
 
   //  logTuneInstance();
@@ -144,9 +145,9 @@ class App extends Component {
 
         <main
           className="container"
-          style={{ display: "flex", justifyContent: "center" }}
+          style={{ display: this.state.containerStyle, justifyContent: "center" }}
         >
-          <div>
+          <div className="form-container">
             <div className="pure-u-1-1" data-aos="fade-right">
               <h1>Define Your Terms!</h1>
               <h3>The Split</h3>
