@@ -142,7 +142,7 @@ class App extends Component {
     
     return (<div>
       <div className="splash" style={{display: this.state.showSplash ? 'block' : 'none'}}>
-         <button className="owner" onClick={this.owner} >
+         <button className="owner myButton" onClick={this.owner} >
             Claim Song
          </button>
       </div>
